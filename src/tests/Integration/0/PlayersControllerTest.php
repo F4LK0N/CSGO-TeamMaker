@@ -7,6 +7,11 @@ use Tests\TestCase;
 
 class PlayersControllerTest extends TestCase
 {
+    static public function setUpBeforeClass(): void
+    {
+        
+    }
+    
     /**
      * A basic test example.
      */

@@ -45,8 +45,14 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "test":  "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage",
-        "dox":   "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testdox"
+        "test": [
+            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testsuite Unit",
+            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testsuite Integration"
+        ],
+        "dox": [
+            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testdox --testsuite Unit",
+            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testdox --testsuite Integration"
+        ]
     },
     "extra": {
         "laravel": {
