@@ -10,12 +10,14 @@ docker compose exec -it app /bin/bash
 Container:
 ```bash
 composer create-project --prefer-dist laravel/laravel .
+php artisan key:generate
 ```
 
 ## BUILD
 Local:
 ```bash
 docker compose build
+docker compose exec app php artisan migrate
 ```
 
 ## RUN
