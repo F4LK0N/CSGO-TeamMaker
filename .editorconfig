@@ -9,6 +9,7 @@ indent_size = 4
 
 [*.md]
 indent_style = tab
+trim_trailing_whitespace = false
 
 [.gitignore]
 insert_final_newline = false
