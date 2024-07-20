@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Str;
 
+var_dump(env('APP_KEY'));die;
+var_dump(1);die;
+
+
 return [
 
     /*
