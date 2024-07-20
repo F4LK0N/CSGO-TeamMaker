@@ -14,9 +14,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-COPY . /var/www
-
-RUN composer install
-
 EXPOSE 3000
 CMD ["php-fpm"]
