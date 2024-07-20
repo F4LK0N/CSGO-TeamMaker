@@ -26,3 +26,14 @@ Local:
 docker compose up -d
 docker compose exec app php artisan serve --host=0.0.0.0 --port=3000
 ```
+
+## ACCESS
+```bash
+http://localhost:3000
+```
+
+## TEST
+```bash
+docker compose exec app composer test
+docker compose exec app composer dox
+```
