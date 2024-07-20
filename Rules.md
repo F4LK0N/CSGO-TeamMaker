@@ -1,46 +1,37 @@
-Challenge Details
-
+# Challenge Details
 The goal of this challenge is to build an API that will manage (add, update, list, delete) players with some skills and select the best players with the desired position/skill.
 
- 
-
 The players will need to have:
-
-    name
-    position
-    list of skills
-
- 
+```
+name
+position
+list of skills
+```
 
 The available positions for players are:
-
-    'defender'
-    'midfielder'
-    'forward'
-
- 
+```
+'defender'
+'midfielder'
+'forward'
+```
 
 The skill will have:
-
-    skill name
-    value
-
- 
+```
+skill name
+value
+```
 
 The available skills for a player are:
-
-    'defense'
-    'attack'
-    'speed'
-    'strength'
-    'stamina'
-
- 
+```
+'defense'
+'attack'
+'speed'
+'strength'
+'stamina'
+```
 
 The player needs to have at least one skill, but it does not need to have values for all available skills. A valid player in JSON format is: 
-
- 
-
+```json
 {
    "name": "player name",
    "position": "midfielder",
@@ -55,48 +46,21 @@ The player needs to have at least one skill, but it does not need to have values
       }
    ]
 }
+```
 
-JSON
-
- 
-
-Automatic Testing
-
- 
-
+## Automatic Testing
 Team lead will use their test suite to run automatic tests to verify your implementation.
-
- 
 
 Files under __tests__ directory provide example test cases. You should read them to figure out how to properly implement the solution and throw exceptions.
 
- 
-
- 
-
 You are also encouraged to write your own test cases under tests directory.
 
- 
-
- 
-Existing Source Code
-
- 
-
+## Existing Source Code
 Even though this is a new project you will not be starting from scratch. In the repository you will also find some preexisting source code.
-
- 
 
 You must continue building on top of that preexisting source code and you should NOT DELETE any of the existing source code, files and folders NOR move or rename any of the existing files, classes, methods or variables. However, you’re free to add new source files to the project and extend existing classes with your own methods and variables. 
 
- 
-
- 
-
-IMPORTANT NOTES:
-
- 
-
+### IMPORTANT NOTES:
     Please follow the instructions in the existing source code. Not following the instructions and not using the preexisting source code as a base might result in automatic test failures.
     Please DO NOT CHANGE the folder structure of WebApi and WebApiTest projects, and DO NOT MOVE the provided files to a different place, as this will result in a test failure.
     All the new classes should have public access.
@@ -117,12 +81,11 @@ The app needs to be served at http://localhost:3000 and the API requests should 
 In case of errors, the body should return the correct error message following this pattern: 
 
  
-
+```json
 {
     "message": "Invalid value for position: midfielder1"
 }
-
-JSON
+```
 
  
 

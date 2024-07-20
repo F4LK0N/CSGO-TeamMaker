@@ -1,0 +1,40 @@
+services:
+  app:
+    container_name: ${COMPOSE_PREFIX}app
+    hostname: app
+    build: ./.docker/app
+    volumes:
+      - ./src:/var/www
+      - ./.docker/app/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+    ports:
+      # Web Server
+      - "3000:3000"
+
+  db:
+    image: mysql:5.7
+    container_name: ${COMPOSE_PREFIX}db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+
+volumes:
+  dbdata:
+    driver: local
