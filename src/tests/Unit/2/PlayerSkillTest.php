@@ -30,4 +30,9 @@ class PlayerSkillTest extends TestCase
         $this->expectExceptionMessage("Invalid value for 'value': 'false'");
         new PlayerSkill(1, false);
     }
+    
+    //public function testSkillNameInvalid()
+    //{
+    //    
+    //}
 }

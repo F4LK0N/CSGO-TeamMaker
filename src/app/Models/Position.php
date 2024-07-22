@@ -36,7 +36,7 @@ class Position implements JsonSerializable
     private function loadById($id)
     {
         if (!self::isValid($id)) {
-            throw new InvalidArgumentException("Invalid value for 'position_id': '$id'");
+            throw new InvalidArgumentException("Invalid value for 'position': '$id'");
         }
         $this->id = (int)$id;
         $this->name = self::$positions[$this->id];

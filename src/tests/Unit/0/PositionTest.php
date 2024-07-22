@@ -7,7 +7,18 @@ use InvalidArgumentException;
 
 class PositionTest extends TestCase
 {
-    public function testCreatePositionById()
+    public function testIdInvalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'position': '-1'");
+        new Position(-1);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'position': '3'");
+        new Position(3);
+    }
+    
+    public function testId()
     {
         $positions = [
             0 => 'defender',
@@ -22,7 +33,14 @@ class PositionTest extends TestCase
         }
     }
 
-    public function testCreatePositionByName()
+    public function testNameInvalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'position': 'invalid'");
+        new Position('invalid');
+    }
+    
+    public function testName()
     {
         $positions = [
             'defender' => 0,
@@ -37,21 +55,7 @@ class PositionTest extends TestCase
         }
     }
 
-    public function testInvalidPositionId()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'position_id': '999'");
-        new Position(999);
-    }
-
-    public function testInvalidPositionName()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'position': 'invalid'");
-        new Position('invalid');
-    }
-
-    public function testJsonSerialize()
+    public function testJson()
     {
         $positions = [
             'defender',

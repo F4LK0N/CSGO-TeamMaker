@@ -7,7 +7,18 @@ use InvalidArgumentException;
 
 class SkillTest extends TestCase
 {
-    public function testCreateSkillById()
+    public function testIdInvalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'skill': '-1'");
+        new Skill(-1);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'skill': '5'");
+        new Skill(5);
+    }
+    
+    public function testId()
     {
         $skills = [
             0 => 'defense',
@@ -23,8 +34,15 @@ class SkillTest extends TestCase
             $this->assertEquals($name, $skill->getName());
         }
     }
+    
+    public function testNameInvalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'skill': 'invalid'");
+        new Skill('invalid');
+    }
 
-    public function testCreateSkillByName()
+    public function testName()
     {
         $skills = [
             'defense' => 0,
@@ -41,21 +59,7 @@ class SkillTest extends TestCase
         }
     }
 
-    public function testInvalidSkillId()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'skill_id': '999'");
-        new Skill(999);
-    }
-
-    public function testInvalidSkillName()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'skill': 'invalid'");
-        new Skill('invalid');
-    }
-
-    public function testJsonSerialize()
+    public function testJson()
     {
         $skills = [
             'defense',

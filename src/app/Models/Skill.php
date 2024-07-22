@@ -38,7 +38,7 @@ class Skill implements JsonSerializable
     private function loadById($id)
     {
         if (!self::isValid($id)) {
-            throw new InvalidArgumentException("Invalid value for 'skill_id': '$id'");
+            throw new InvalidArgumentException("Invalid value for 'skill': '$id'");
         }
         $this->id = (int)$id;
         $this->name = self::$skills[$this->id];
