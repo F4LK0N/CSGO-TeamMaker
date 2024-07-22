@@ -35,5 +35,9 @@ http://localhost:3000
 ## TEST
 ```bash
 docker compose exec app composer test
-docker compose exec app composer dox
 ```
+
+
+
+player name unique
+random player when 2 skills equal

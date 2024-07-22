@@ -12,11 +12,27 @@ class PlayerSkill extends Model implements JsonSerializable
         return is_int($value) && $value >= 0 && $value <= 100;
     }
     
-    protected $fillable = ['player_id', 'skill', 'value'];
+    protected $attributes = [
+        'skill',
+        'value'
+    ];
+    protected $fillable = [
+        'skill',
+        'value'
+    ];
+    
+    protected $guarded = [];
+    
+    private $id;
+    private $player_id;
     private $skill;
+    private $skill_id;
+    private $value;
 
     public function __construct(array $attributes = [])
     {
+        //parent::__construct($attributes);
+        
         if (!isset($attributes['skill'])) {
             throw new InvalidArgumentException("Invalid value for 'skill': Missing field.");
         }
@@ -31,7 +47,7 @@ class PlayerSkill extends Model implements JsonSerializable
     private function setSkill($skill)
     {
         $this->skill = new Skill($skill);
-        $this->attributes['skill_id'] = $this->skill->getId();
+        $this->skill_id = $this->skill->getId();
     }
 
     public function setValue($value)
@@ -39,7 +55,7 @@ class PlayerSkill extends Model implements JsonSerializable
         if (!self::isValidValue($value)) {
             throw new InvalidArgumentException("Invalid value for 'value': '$value'");
         }
-        $this->attributes['value'] = $value;
+        $this->value = $value;
     }
 
     public function getSkill()
@@ -49,14 +65,14 @@ class PlayerSkill extends Model implements JsonSerializable
 
     public function getValue()
     {
-        return $this->attributes['value'];
+        return $this->value;
     }
 
     public function jsonSerialize(): mixed
     {
         return [
             'skill' => $this->skill,
-            'value' => $this->attributes['value'],
+            'value' => $this->value,
         ];
     }
 }

@@ -46,12 +46,8 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "test": [
-            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testsuite Unit",
-            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testsuite Integration"
-        ],
-        "dox": [
-            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testdox --testsuite Unit",
-            "/var/www/vendor/bin/phpunit --configuration phpunit.xml --no-coverage --testdox --testsuite Integration"
+            "./vendor/bin/phpunit --testsuite Unit",
+            "./vendor/bin/phpunit --testsuite Integration"
         ]
     },
     "extra": {

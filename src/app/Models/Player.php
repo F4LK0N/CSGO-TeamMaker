@@ -12,11 +12,18 @@ class Player extends Model implements JsonSerializable
         return is_string($name) && !empty($name);
     }
     
-    protected $fillable = ['name', 'position_id'];
+    protected $fillable =[
+        'name',
+        'position',
+        'playerSkills'
+    ];
+    
+    private $id;
+    private $name;
     private $position;
+    private $position_id;
     private $playerSkills = [];
 
-    // Construtor
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -36,19 +43,18 @@ class Player extends Model implements JsonSerializable
         $this->setPlayerSkills($attributes['playerSkills']);
     }
 
-    // Métodos de instância
     public function setName($name)
     {
         if (!self::isValidName($name)) {
             throw new InvalidArgumentException("Invalid value for 'name': '$name'");
         }
-        $this->attributes['name'] = $name;
+        $this->name = $name;
     }
 
     public function setPosition($position)
     {
         $this->position = new Position($position);
-        $this->attributes['position_id'] = $this->position->getId();
+        $this->position_id = $this->position->getId();
     }
 
     public function setPlayerSkills($playerSkills)
@@ -59,11 +65,21 @@ class Player extends Model implements JsonSerializable
         if (empty($playerSkills)) {
             throw new InvalidArgumentException("Invalid value for 'playerSkills': empty-array.");
         }
+        $skillNames=[];
         foreach ($playerSkills as $index => $playerSkill) {
             $this->skills[] = new PlayerSkill($playerSkill);
+            if (isset($skillNames[$playerSkill['name']])) {
+                throw new InvalidArgumentException("Invalid value for 'playerSkills': Duplicate skill '".$playerSkill['name']."'.");
+            }
+            $skillNames[$playerSkill['name']]=true;
         }
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+    
     public function getPosition()
     {
         return $this->position;
