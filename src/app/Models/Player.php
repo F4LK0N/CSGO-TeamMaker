@@ -12,6 +12,12 @@ class Player extends Model implements JsonSerializable
         return is_string($name) && !empty($name);
     }
     
+    protected $fillable = [
+        'name',
+        'position_id',
+    ];
+    protected $guarded = [];
+    
     private $id = 0;
     private $name;
     private $position;
@@ -82,6 +88,15 @@ class Player extends Model implements JsonSerializable
     public function getPlayerSkills()
     {
         return $this->playerSkills;
+    }
+    
+    public function save(array $options = [])
+    {
+        $this->fill([
+            'name' => $this->name,
+            'position_id' => $this->position_id,
+        ]);
+        parent::save($options);
     }
 
     public function jsonSerialize(): mixed
