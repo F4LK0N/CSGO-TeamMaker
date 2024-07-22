@@ -58,58 +58,44 @@ You are also encouraged to write your own test cases under tests directory.
 ## Existing Source Code
 Even though this is a new project you will not be starting from scratch. In the repository you will also find some preexisting source code.
 
-You must continue building on top of that preexisting source code and you should NOT DELETE any of the existing source code, files and folders NOR move or rename any of the existing files, classes, methods or variables. However, you’re free to add new source files to the project and extend existing classes with your own methods and variables. 
+You must continue building on top of that preexisting source code and you should NOT DELETE any of the existing source code, files and folders NOR move or rename any of the existing files, classes, methods or variables. However, you're free to add new source files to the project and extend existing classes with your own methods and variables. 
 
 ### IMPORTANT NOTES:
-    Please follow the instructions in the existing source code. Not following the instructions and not using the preexisting source code as a base might result in automatic test failures.
-    Please DO NOT CHANGE the folder structure of WebApi and WebApiTest projects, and DO NOT MOVE the provided files to a different place, as this will result in a test failure.
-    All the new classes should have public access.
+    Please follow the instructions in the existing source code. Not following the instructions and not using the preexisting source code as a base might result in automatic test failures.  
+	
+    Please DO NOT CHANGE the folder structure of WebApi and WebApiTest projects, and DO NOT MOVE the provided files to a different place, as this will result in a test failure.  
+	
+    All the new classes should have public access.  
+	
     Before you submit the challenge, please make sure the project was successfully built.
 
- 
 
- 
-API Description
+## API Description
 
- 
-Basic Config:
+### Basic Config:
+The app needs to be served at http://localhost:3000 and the API requests should be available at http://localhost:3000/api/.  
 
-The app needs to be served at http://localhost:3000 and the API requests should be available at http://localhost:3000/api/.
+In case of errors, the body should return the correct error message following this pattern:
 
- 
-
-In case of errors, the body should return the correct error message following this pattern: 
-
- 
 ```json
 {
     "message": "Invalid value for position: midfielder1"
 }
 ```
 
- 
+It is important that the error message contains the field that is invalid (position field in this case) and the invalid value used in the request (midfielder1 in this case).  
 
-It is important that the error message contains the field that is invalid (position field in this case) and the invalid value used in the request (midfielder1 in this case). 
+If the field is inside an array, the error message should show the field inside it, for example if the skill of the player (inside playerSkills array) has an invalid value, the error should contain the "skill" field and the invalid value for that skill.  
 
- 
+The solution should return only the first error found. If the request to create the player has invalid values for position and skill fields, the solution should return only the message for one of those fields. The validation rules do not need to follow any specific order.  
 
-If the field is inside an array, the error message should show the field inside it, for example if the skill of the player (inside playerSkills array) has an invalid value, the error should contain the "skill" field and the invalid value for that skill.
-
- 
-
-The solution should return only the first error found. If the request to create the player has invalid values for position and skill fields, the solution should return only the message for one of those fields. The validation rules do not need to follow any specific order.
-
- 
-Create Player:
+### Create Player:
 
 The app will need to support player creation on http://localhost:3000/api/player.  
 
- 
+The player info will be sent in the body in JSON format:
 
-The player info will be sent in the body in JSON format: 
-
- 
-
+```json
 {
     "name": "player name 2",
     "position": "midfielder",
@@ -124,15 +110,11 @@ The player info will be sent in the body in JSON format:
         }
     ]
 }
+```
 
-JSON
+The expected result from this endpoint is the created player. The result can also have additional fields, like id's created for the player and the skills ex:  
 
- 
-
-The expected result from this endpoint is the created player. The result can also have additional fields, like id's created for the player and the skills ex: 
-
- 
-
+```json
 {
     "id": 1,
     "name": "player name 2",
@@ -152,20 +134,15 @@ The expected result from this endpoint is the created player. The result can als
         }
     ]
 }
+```
 
-JSON
+### Update Player:
 
- 
-Update Player:
-
-The app will need to support player update on http://localhost:3000/api/player/{playerId} where {playerId} is the id of the player that is being updated. 
-
- 
+The app will need to support player update on http://localhost:3000/api/player/{playerId} where __{playerId}__ is the id of the player that is being updated.  
 
 The player info will be sent in the body in JSON format: 
 
- 
-
+```json
 {
     "name": "player name updated",
     "position": "midfielder",
@@ -180,15 +157,11 @@ The player info will be sent in the body in JSON format:
         }
     ]
 }
-
-JSON
-
- 
+```
 
 The expected result from this endpoint is the updated player. The result can also have additional fields, like id's created for the player and the skills ex: 
 
- 
-
+```json
 {
     "id": 1,
     "name": "player name updated",
@@ -208,33 +181,28 @@ The expected result from this endpoint is the updated player. The result can als
         }
     ]
 }
+```
 
-JSON
+### Delete Player:
 
- 
-Delete Player:
+The app will need to support player deletion on http://localhost:3000/api/player/{playerId} where {playerId} is the id of the player that is being deleted.  
 
-The app will need to support player deletion on http://localhost:3000/api/player/{playerId} where {playerId} is the id of the player that is being deleted.
-
- 
-
-Important!
+#### Important!
 
 The endpoint to delete the player should be protected using Bearer token in the Authorization Header. The value of the Authorization Header should be:
 
-Bearer SkFabTZibXE1aE14ckpQUUxHc2dnQ2RzdlFRTTM2NFE2cGI4d3RQNjZmdEFITmdBQkE= 
+```
+Bearer SkFabTZibXE1aE14ckpQUUxHc2dnQ2RzdlFRTTM2NFE2cGI4d3RQNjZmdEFITmdBQkE=
+```
 
- 
-List of Players:
+
+### List of Players:
 
 The app will need to support an endpoint to list the available players on http://localhost:3000/api/player/.   
 
- 
+The expected result from this endpoint is the list of players in the database, for example:  
 
-The expected result from this endpoint is the list of players in the database, for example: 
-
- 
-
+```json
 [
     {
         "id": 1,
@@ -275,11 +243,10 @@ The expected result from this endpoint is the list of players in the database, f
         ]
     }
 ]
+```
 
-JSON
 
- 
-Team Selection:
+### Team Selection:
 
 The app will need to support an endpoint to select the players available based on some parameters sent on the request. The endpoint to select the best team should be http://localhost:3000/api/team/process. 
 
