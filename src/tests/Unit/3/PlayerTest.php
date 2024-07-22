@@ -38,14 +38,14 @@ class PlayerTest extends TestCase
         new Player([
             'name' => 'John Doe',
             'position' => 'midfielder',
-            'playerSkills' => 'invalid'
+            'playerSkills' => []
         ]);
     }
     
     public function testPlayerSkillsInvalidDuplicated()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'playerSkills': empty-array.");
+        $this->expectExceptionMessage("Invalid value for 'playerSkills': duplicated skill 'attack'.");
         new Player([
             'name' => 'John Doe',
             'position' => 'midfielder',
@@ -56,7 +56,30 @@ class PlayerTest extends TestCase
         ]);
     }
     
-    public function testCreatePlayer()
+    public function testPlayerSkillsInvalidMissingFields()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'skill': Missing field.");
+        new Player([
+            'name' => 'John Doe',
+            'position' => 'midfielder',
+            'playerSkills' => [
+                ['value' => 100]
+            ]
+        ]);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'value': Missing field.");
+        new Player([
+            'name' => 'John Doe',
+            'position' => 'midfielder',
+            'playerSkills' => [
+                ['skill' => 'attack']
+            ]
+        ]);
+    }
+    
+    public function testPlayer()
     {
         $player = new Player([
             'name' => 'John Doe',
@@ -70,29 +93,6 @@ class PlayerTest extends TestCase
         $this->assertEquals('John Doe', $player->getName());
         $this->assertEquals('midfielder', $player->getPosition()->getName());
         $this->assertCount(2, $player->getPlayerSkills());
-    }
-    
-    public function testInvalidSkillMissingFields()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'skill': Missing field.");
-        new Player([
-            'name' => 'John Doe',
-            'position' => 'midfielder',
-            'playerSkills' => [
-                ['skill' => 'attack']
-            ]
-        ]);
-        
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'value': Missing field.");
-        new Player([
-            'name' => 'John Doe',
-            'position' => 'midfielder',
-            'playerSkills' => [
-                ['value' => 100]
-            ]
-        ]);
     }
 
     public function testJsonSerialize()
@@ -108,7 +108,7 @@ class PlayerTest extends TestCase
 
         $json = json_encode($player);
         $expected = json_encode([
-            'id' => null, // id is null because it's not set
+            'id' => 0,
             'name' => 'John Doe',
             'position' => 'midfielder',
             'playerSkills' => [

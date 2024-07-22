@@ -12,17 +12,6 @@ class PlayerSkill extends Model implements JsonSerializable
         return is_int($value) && $value >= 0 && $value <= 100;
     }
     
-    protected $attributes = [
-        'skill',
-        'value'
-    ];
-    protected $fillable = [
-        'skill',
-        'value'
-    ];
-    
-    protected $guarded = [];
-    
     private $id;
     private $player_id;
     private $skill;

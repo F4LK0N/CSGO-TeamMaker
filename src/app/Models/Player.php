@@ -12,13 +12,7 @@ class Player extends Model implements JsonSerializable
         return is_string($name) && !empty($name);
     }
     
-    protected $fillable =[
-        'name',
-        'position',
-        'playerSkills'
-    ];
-    
-    private $id;
+    private $id = 0;
     private $name;
     private $position;
     private $position_id;
@@ -26,7 +20,7 @@ class Player extends Model implements JsonSerializable
 
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
+        //parent::__construct($attributes);
 
         if (!isset($attributes['name'])) {
             throw new InvalidArgumentException("Invalid value for 'name': Missing field.");
@@ -67,11 +61,11 @@ class Player extends Model implements JsonSerializable
         }
         $skillNames=[];
         foreach ($playerSkills as $index => $playerSkill) {
-            $this->skills[] = new PlayerSkill($playerSkill);
-            if (isset($skillNames[$playerSkill['name']])) {
-                throw new InvalidArgumentException("Invalid value for 'playerSkills': Duplicate skill '".$playerSkill['name']."'.");
+            $this->playerSkills[] = new PlayerSkill($playerSkill);
+            if (isset($skillNames[$playerSkill['skill']])) {
+                throw new InvalidArgumentException("Invalid value for 'playerSkills': duplicated skill '".$playerSkill['skill']."'.");
             }
-            $skillNames[$playerSkill['name']]=true;
+            $skillNames[$playerSkill['skill']]=true;
         }
     }
 
@@ -93,8 +87,8 @@ class Player extends Model implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'id' => $this->attributes['id'],
-            'name' => $this->attributes['name'],
+            'id' => $this->id,
+            'name' => $this->name,
             'position' => $this->position,
             'playerSkills' => $this->playerSkills,
         ];
