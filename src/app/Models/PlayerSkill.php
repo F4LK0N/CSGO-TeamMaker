@@ -7,35 +7,39 @@ use JsonSerializable;
 
 class PlayerSkill extends Model implements JsonSerializable
 {
-    protected $fillable = ['player_id', 'value'];
-
     static public function isValidValue($value)
     {
         return is_int($value) && $value >= 0 && $value <= 100;
     }
-
+    
+    protected $fillable = ['player_id', 'skill', 'value'];
     private $skill;
-    private $value;
-    private $skill_id;
 
-    public function __construct($skillValue, $value)
+    public function __construct(array $attributes = [])
     {
-        $this->setSkill($skillValue);
-        $this->setValue($value);
+        if (!isset($attributes['skill'])) {
+            throw new InvalidArgumentException("Invalid value for 'skill': Missing field.");
+        }
+        if (!isset($attributes['value'])) {
+            throw new InvalidArgumentException("Invalid value for 'value': Missing field.");
+        }
+        
+        $this->setSkill($attributes['skill']);
+        $this->setValue($attributes['value']);
     }
 
-    private function setSkill($skillValue)
+    private function setSkill($skill)
     {
-        $this->skill = new Skill($skillValue);
-        $this->skill_id = $this->skill->getId();
+        $this->skill = new Skill($skill);
+        $this->attributes['skill_id'] = $this->skill->getId();
     }
 
-    private function setValue($value)
+    public function setValue($value)
     {
         if (!self::isValidValue($value)) {
             throw new InvalidArgumentException("Invalid value for 'value': '$value'");
         }
-        $this->value = $value;
+        $this->attributes['value'] = $value;
     }
 
     public function getSkill()
@@ -45,14 +49,14 @@ class PlayerSkill extends Model implements JsonSerializable
 
     public function getValue()
     {
-        return $this->value;
+        return $this->attributes['value'];
     }
 
     public function jsonSerialize(): mixed
     {
         return [
             'skill' => $this->skill,
-            'value' => $this->value
+            'value' => $this->attributes['value'],
         ];
     }
 }

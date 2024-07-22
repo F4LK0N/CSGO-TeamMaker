@@ -63,7 +63,7 @@ class Skill implements JsonSerializable
         return $this->name;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->name;
     }

@@ -12,30 +12,30 @@ class PlayerSkillTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'value': '-1'");
-        new PlayerSkill(1, -1);
+        new PlayerSkill(['skill'=>1,'value'=>-1]);
         
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'value': '101'");
-        new PlayerSkill(1, 101);
+        new PlayerSkill(['skill'=>1,'value'=>101]);
         
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'value': 'a'");
-        new PlayerSkill(1, 'a');
+        new PlayerSkill(['skill'=>1,'value'=>'a']);
         
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'value': 'true'");
-        new PlayerSkill(1, true);
+        new PlayerSkill(['skill'=>1,'value'=>true]);
         
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'value': 'false'");
-        new PlayerSkill(1, false);
+        new PlayerSkill(['skill'=>1,'value'=>false]);
     }
     
     public function testValue()
     {
         for ($i=0; $i<=100; $i++) {
-            $skill = new PlayerSkill(1, $i);
-            $this->assertEquals($i, $skill->getValue());
+            $playerSkill = new PlayerSkill(['skill'=>1,'value'=>$i]);
+            $this->assertEquals($i, $playerSkill->getValue());
         }
     }
     
@@ -43,7 +43,7 @@ class PlayerSkillTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Invalid value for 'skill': 'invalid'");
-        $skill = new PlayerSkill('invalid', 100);
+        $skill = new PlayerSkill(['skill'=>'invalid','value'=>100]);
     }
     
     public function testSkill()
@@ -57,14 +57,14 @@ class PlayerSkillTest extends TestCase
         ];
 
         foreach ($skills as $skill => $id) {
-            $playerSkill = new PlayerSkill($skill, 100);
+            $playerSkill = new PlayerSkill(['skill'=>$skill,'value'=>100]);
             $this->assertEquals($skill, $playerSkill->getSkill()->getName());
         }
     }
     
     public function testJson()
     {
-        $playerSkill = new PlayerSkill('defense', 100);
+        $playerSkill = new PlayerSkill(['skill'=>'defense','value'=>100]);
         $this->assertJsonStringEqualsJsonString('{"skill":"defense","value":100}', json_encode($playerSkill));
     }
 }
