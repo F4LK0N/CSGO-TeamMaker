@@ -48,7 +48,7 @@ class PlayerSkill extends Model implements JsonSerializable
         return $this->value;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'skill' => $this->skill,

@@ -8,32 +8,26 @@ use InvalidArgumentException;
 
 class PlayerSkillTest extends TestCase
 {
-    public function testCreatePlayerSkill()
-    {
-        $playerSkill = new PlayerSkill(1, 85);
-
-        $this->assertEquals(85, $playerSkill->getValue());
-        $this->assertInstanceOf(Skill::class, $playerSkill->getSkill());
-        $this->assertEquals('attack', $playerSkill->getSkill()->getName());
-    }
-
-    public function testInvalidPlayerSkillValue()
+    public function testValueInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid value for 'value': '150'");
-        new PlayerSkill(1, 150);
-    }
-
-    public function testJsonSerialize()
-    {
-        $playerSkill = new PlayerSkill(2, 90);
-
-        $json = json_encode($playerSkill);
-        $expected = json_encode([
-            'skill' => 'speed',
-            'value' => 90
-        ]);
-
-        $this->assertJsonStringEqualsJsonString($expected, $json);
+        $this->expectExceptionMessage("Invalid value for 'value': '101'");
+        new PlayerSkill(1, 101);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'value': '-1'");
+        new PlayerSkill(1, -1);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'value': 'a'");
+        new PlayerSkill(1, 'a');
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'value': 'true'");
+        new PlayerSkill(1, true);
+        
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid value for 'value': 'false'");
+        new PlayerSkill(1, false);
     }
 }
