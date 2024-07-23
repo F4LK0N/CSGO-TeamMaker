@@ -242,19 +242,19 @@ class PlayerControllerTest extends TestCase
         ]);
     }
     
-//    public function testAdd(): void
-//    {
-//        self::truncateTables();
-//        
-//        $response = $this->postJson('/api/player', [
-//            'name' => 'John Doe',
-//            'position' => 'midfielder',
-//            'playerSkills' => [
-//                ['skill' => 'attack', 'value' => 80],
-//                ['skill' => 'speed', 'value' => 90],
-//            ]
-//        ]);
-//
-//        $response->assertStatus(201);
-//    }
+    public function testAdd(): void
+    {
+        self::truncateTables();
+        
+        $response = $this->postJson('/api/player', [
+            'name' => 'John Doe',
+            'position' => 'midfielder',
+            'playerSkills' => [
+                ['skill' => 'attack', 'value' => 80],
+                ['skill' => 'speed', 'value' => 90],
+            ]
+        ]);
+
+        $response->assertStatus(201);
+    }
 }

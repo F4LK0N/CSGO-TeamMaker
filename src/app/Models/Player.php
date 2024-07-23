@@ -109,7 +109,7 @@ class Player extends Model implements JsonSerializable
         }
         $this->id = $this->getKey();
         foreach ($this->playerSkills as $playerSkill) {
-            $playerSkill->player_id = $this->id;
+            $playerSkill->setPlayerId($this->id);
             $playerSkill->save();
         }
         return $this;

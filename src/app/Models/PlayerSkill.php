@@ -12,6 +12,13 @@ class PlayerSkill extends Model implements JsonSerializable
         return is_int($value) && $value >= 0 && $value <= 100;
     }
     
+    protected $fillable = [
+        'player_id',
+        'skill_id',
+        'value',
+    ];
+    protected $guarded = [];
+    
     private $id;
     private $player_id;
     private $skill;
@@ -32,7 +39,11 @@ class PlayerSkill extends Model implements JsonSerializable
         $this->setSkill($attributes['skill']);
         $this->setValue($attributes['value']);
     }
-
+    
+    public function setPlayerId($playerId){
+        $this->player_id = $playerId;
+    }
+    
     private function setSkill($skill)
     {
         $this->skill = new Skill($skill);
@@ -55,6 +66,17 @@ class PlayerSkill extends Model implements JsonSerializable
     public function getValue()
     {
         return $this->value;
+    }
+    
+    public function save(array $options = [])
+    {
+        $this->fill([
+            'player_id' => $this->player_id,
+            'skill_id' => $this->skill_id,
+            'value' => $this->value,
+        ]);
+        parent::save($options);
+        return $this;
     }
 
     public function jsonSerialize(): mixed
