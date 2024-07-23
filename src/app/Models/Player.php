@@ -45,6 +45,7 @@ class Player extends Model implements JsonSerializable
 
     public function setName($name)
     {
+        //TODO: SANITIZE
         if (!self::isValidName($name)) {
             throw new InvalidArgumentException("Invalid value for 'name': '$name'");
         }
@@ -96,8 +97,24 @@ class Player extends Model implements JsonSerializable
             'name' => $this->name,
             'position_id' => $this->position_id,
         ]);
-        parent::save($options);
+        try{
+            parent::save($options);
+        }
+        catch (\Exception $e) {
+            var_dump($e);
+            die;
+            
+            
+            throw new InvalidArgumentException("Invalid value for 'playerSkills': duplicated player.");
+        }
+        $this->id = $this->getKey();
+        foreach ($this->playerSkills as $playerSkill) {
+            $playerSkill->player_id = $this->id;
+            $playerSkill->save();
+        }
+        return $this;
     }
+    
 
     public function jsonSerialize(): mixed
     {
